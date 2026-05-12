@@ -150,6 +150,7 @@
       font-weight: 500;
       letter-spacing: 0.01em;
       color: var(--text-white);
+      line-height: 1;
     }
 
     .logo-dot {
@@ -162,7 +163,8 @@
       list-style: none;
       position: absolute;
       left: 50%;
-      transform: translateX(-50%);
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
 
     .nav-links a {
@@ -173,6 +175,7 @@
       letter-spacing: 0.08em;
       color: var(--text-gray);
       transition: color 0.3s;
+      line-height: 1;
     }
 
     .nav-links a:hover { color: var(--text-white); }
@@ -223,6 +226,7 @@
       border: none;
       cursor: pointer;
       padding: 4px;
+      z-index: 101;
     }
     .nav-toggle span {
       display: block;
@@ -230,6 +234,32 @@
       height: 2px;
       background: #fff;
       margin: 5px 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-toggle.active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .nav-links.mobile-open {
+      display: flex !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+      background: rgba(13, 13, 13, 0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transform: none;
+      z-index: 99;
+    }
+    .nav-links.mobile-open a {
+      font-size: 1.25rem;
+      color: var(--text-white);
     }
 
     /* ═══════════════════════════════════════
@@ -566,14 +596,25 @@
     }
 
     .work-arrow {
-      font-size: 1.5rem;
-      color: rgba(255,255,255,0.15);
-      transition: color 0.3s, transform 0.3s var(--ease-spring);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s var(--ease-spring);
+    }
+
+    .work-arrow svg {
+      width: 20px;
+      height: 20px;
+      stroke: rgba(255,255,255,0.2);
+      transition: stroke 0.3s;
     }
 
     .work-item:hover .work-arrow {
-      color: var(--accent);
       transform: translateX(8px);
+    }
+
+    .work-item:hover .work-arrow svg {
+      stroke: var(--accent);
     }
 
     .work-cta {
@@ -1263,7 +1304,7 @@
       .nav-actions { display: none; }
       .nav-toggle { display: block; }
 
-      .hero { padding: 0 24px 48px; align-items: center; }
+      .hero { padding: 0 24px 10vh; }
       .hero-title { font-size: clamp(2.5rem, 12vw, 5rem); }
       .hero-bottom { flex-direction: column; gap: 32px; }
       .hero-scroll-pill { display: none; }
@@ -1293,7 +1334,8 @@
       .tools-section { padding: 80px 24px; }
       .tools-top { flex-direction: column; gap: 24px; align-items: flex-start; }
       .tools-filters { flex-wrap: wrap; }
-      .tools-grid .tool-cell { flex: 0 0 33.333%; border-left-width: 1px; border-top-width: 1px; }
+      .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+      .tools-grid .tool-cell { flex: none; }
 
       .contact { padding: 80px 24px; }
       .contact-inner { grid-template-columns: 1fr; gap: 48px; }
@@ -1419,7 +1461,7 @@
           </div>
         </div>
         <span class="work-year">2025</span>
-        <span class="work-arrow">→</span>
+        <span class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
       </a>
 
       <a href="https://dribbble.com/shots/27141829-Smart-Home-UI-Concept" target="_blank" class="work-item reveal d1">
@@ -1432,7 +1474,7 @@
           </div>
         </div>
         <span class="work-year">2025</span>
-        <span class="work-arrow">→</span>
+        <span class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
       </a>
 
       <a href="https://dribbble.com/shots/27077872-Conversion-Focused-Hero-Redesign" target="_blank" class="work-item reveal d2">
@@ -1446,7 +1488,7 @@
           </div>
         </div>
         <span class="work-year">2024</span>
-        <span class="work-arrow">→</span>
+        <span class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
       </a>
 
       <a href="https://dribbble.com/shots/26725525-Emergency-App-Health-Tracker" target="_blank" class="work-item reveal d3">
@@ -1459,7 +1501,7 @@
           </div>
         </div>
         <span class="work-year">2024</span>
-        <span class="work-arrow">→</span>
+        <span class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
       </a>
 
       <a href="https://dribbble.com/shots/26193981-Educational-Platform-Course-Page" target="_blank" class="work-item reveal d4">
@@ -1472,7 +1514,7 @@
           </div>
         </div>
         <span class="work-year">2024</span>
-        <span class="work-arrow">→</span>
+        <span class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
       </a>
 
       <a href="https://dribbble.com/shots/26079791-Hero-Section-Animation-Figma-Cavalry" target="_blank" class="work-item reveal d5">
@@ -1485,7 +1527,7 @@
           </div>
         </div>
         <span class="work-year">2024</span>
-        <span class="work-arrow">→</span>
+        <span class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
       </a>
 
       <a href="https://dribbble.com/shots/25845971-Statements-Section-Design" target="_blank" class="work-item reveal">
@@ -1498,13 +1540,13 @@
           </div>
         </div>
         <span class="work-year">2024</span>
-        <span class="work-arrow">→</span>
+        <span class="work-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></span>
       </a>
     </div>
 
     <div class="work-cta reveal">
       <a href="https://dribbble.com/nibes" target="_blank" class="btn-outline">
-        View all on Dribbble ↗
+        View all on Dribbble <svg style="width:14px;height:14px;vertical-align:middle;margin-left:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
       </a>
     </div>
   </section>
@@ -1942,19 +1984,19 @@
 
     /* ─── Mobile menu ─── */
     const toggle = document.querySelector('.nav-toggle');
-    const links = document.querySelector('.nav-links');
+    const navLinks = document.querySelector('.nav-links');
     if (toggle) {
       toggle.addEventListener('click', () => {
-        links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
-        links.style.position = 'absolute';
-        links.style.top = '100%';
-        links.style.left = '0';
-        links.style.right = '0';
-        links.style.flexDirection = 'column';
-        links.style.background = 'var(--bg-dark)';
-        links.style.padding = '24px';
-        links.style.gap = '20px';
-        links.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
+        toggle.classList.toggle('active');
+        navLinks.classList.toggle('mobile-open');
+        document.body.style.overflow = navLinks.classList.contains('mobile-open') ? 'hidden' : '';
+      });
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          toggle.classList.remove('active');
+          navLinks.classList.remove('mobile-open');
+          document.body.style.overflow = '';
+        });
       });
     }
 
