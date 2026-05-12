@@ -254,10 +254,12 @@
 
     .hero-glow {
       position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 70% at 70% 40%, rgba(5,150,105,0.15) 0%, transparent 60%);
-      transition: background 0.8s ease-out;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse 50% 45% at 50% 50%, rgba(5,150,105,0.14) 0%, transparent 70%);
       z-index: 0;
+      pointer-events: none;
     }
 
     .hero-grid-lines {
@@ -777,7 +779,6 @@
       border-top: 1px solid rgba(0,0,0,0.1);
       cursor: pointer;
       overflow: hidden;
-      border-radius: 8px;
       transition: background 0.3s ease;
     }
 
@@ -930,11 +931,11 @@
 
     .tools-filters {
       display: flex;
-      gap: 8px;
+      gap: 4px;
     }
 
     .tools-filter {
-      padding: 8px 20px;
+      padding: 7px 14px;
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 100px;
       font-size: 0.75rem;
@@ -1388,7 +1389,7 @@
           <strong>typography, image quality, and structure.</strong>
           I make sure every pixel earns its place.
         </p>
-        <a href="#experience" class="strategy-cta">About me <svg width="9" height="9" viewBox="0 0 14 14" fill="none" style="display:inline-block;vertical-align:middle;margin-left:3px"><path d="M1 13L13 1M13 1H3M13 1V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="#experience" class="strategy-cta">About me</a>
       </div>
     </div>
     <div class="strategy-right">
@@ -1739,9 +1740,14 @@
       <div class="tool-cell" data-cat="analytics"><span class="tool-cell-icon">◌</span><span class="tool-cell-name">Sentry</span><span class="tool-cell-cat">Monitoring</span></div>
       <div class="tool-cell" data-cat="analytics"><span class="tool-cell-icon">◍</span><span class="tool-cell-name">Clarity</span><span class="tool-cell-cat">Heatmaps</span></div>
       <div class="tool-cell" data-cat="analytics"><span class="tool-cell-icon">◎</span><span class="tool-cell-name">GA4</span><span class="tool-cell-cat">Analytics</span></div>
+      <div class="tool-cell" data-cat="dev"><span class="tool-cell-icon">☰</span><span class="tool-cell-name">ClickUp</span><span class="tool-cell-cat">PM</span></div>
       <div class="tool-cell" data-cat="motion"><span class="tool-cell-icon">▷</span><span class="tool-cell-name">After Effects</span><span class="tool-cell-cat">Motion</span></div>
       <div class="tool-cell" data-cat="motion"><span class="tool-cell-icon">▶</span><span class="tool-cell-name">Premiere</span><span class="tool-cell-cat">Video</span></div>
+      <div class="tool-cell" data-cat="motion"><span class="tool-cell-icon">⚔</span><span class="tool-cell-name">Cavalry</span><span class="tool-cell-cat">Motion</span></div>
       <div class="tool-cell" data-cat="motion"><span class="tool-cell-icon">◇</span><span class="tool-cell-name">Spline</span><span class="tool-cell-cat">3D Web</span></div>
+      <div class="tool-cell" data-cat="motion"><span class="tool-cell-icon">△</span><span class="tool-cell-name">3ds Max</span><span class="tool-cell-cat">3D</span></div>
+      <div class="tool-cell" data-cat="motion"><span class="tool-cell-icon">◐</span><span class="tool-cell-name">V-Ray</span><span class="tool-cell-cat">Render</span></div>
+      <div class="tool-cell" data-cat="motion"><span class="tool-cell-icon">☀</span><span class="tool-cell-name">Corona</span><span class="tool-cell-cat">Render</span></div>
     </div>
   </section>
 
@@ -1899,23 +1905,34 @@
     /* ─── Hero glow follow mouse ─── */
     const heroEl = document.querySelector('.hero');
     const heroGlow = document.querySelector('.hero-glow');
-    let glowX = 70, glowY = 40, targetX = 70, targetY = 40;
+    let glowX = 60, glowY = 45, targetX = 60, targetY = 45;
+    let returnSpeed = 0.015;
 
-    heroEl.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', (e) => {
       const rect = heroEl.getBoundingClientRect();
-      targetX = ((e.clientX - rect.left) / rect.width) * 100;
-      targetY = ((e.clientY - rect.top) / rect.height) * 100;
+      if (e.clientY < rect.bottom) {
+        targetX = (e.clientX / window.innerWidth) * 100;
+        targetY = (e.clientY / window.innerHeight) * 100;
+        returnSpeed = 0.02;
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      targetX = 60;
+      targetY = 45;
+      returnSpeed = 0.008;
     });
 
     heroEl.addEventListener('mouseleave', () => {
-      targetX = 70;
-      targetY = 40;
+      targetX = 60;
+      targetY = 45;
+      returnSpeed = 0.008;
     });
 
     function animateGlow() {
-      glowX += (targetX - glowX) * 0.03;
-      glowY += (targetY - glowY) * 0.03;
-      heroGlow.style.background = `radial-gradient(ellipse 80% 70% at ${glowX}% ${glowY}%, rgba(5,150,105,0.15) 0%, transparent 60%)`;
+      glowX += (targetX - glowX) * returnSpeed;
+      glowY += (targetY - glowY) * returnSpeed;
+      heroGlow.style.transform = `translate(${(glowX - 50) * 0.6}%, ${(glowY - 50) * 0.6}%)`;
       requestAnimationFrame(animateGlow);
     }
     animateGlow();
